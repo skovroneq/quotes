@@ -10,7 +10,39 @@
   </head>
   <body>
     <main class="container">
-      <h1>Main page</h1>
+      <nav
+        style="
+          margin-bottom: 20px;
+          border-bottom: 2px solid;
+          padding-left: 30px;
+        "
+      >
+        {% comment %} {% if user.is_authenticated %} {% endcomment %}
+        <ul>
+          <li>
+            <a href="{% url 'quoteapp:quote' %}" role="button">Add quote</a>
+          </li>
+          <li>
+            <a href="{% url 'quoteapp:author' %}" role="button">Add author</a>
+          </li>
+          <li><a href="{% url 'quoteapp:tag' %}" role="button">Add tag</a></li>
+        </ul>
+        {% comment %}
+        <ul>
+          <li>Welcome <b>{{ user.username }}!</b></li>
+          <li><a href="{% url 'users:profile' %}" role="button">Profile</a></li>
+          <li><a href="{% url 'users:logout' %}" role="button">Logout</a></li>
+        </ul>
+        {% else %}
+        <ul>
+          <li><a href="{% url 'users:signup' %}" role="button">Sign Up</a></li>
+          <li><a href="{% url 'users:login' %}" role="button">Login</a></li>
+        </ul>
+        {% endif %} {% endcomment %}
+      </nav>
+      <h1>Quotes</h1>
+
+      {% comment %} {% for quote in quotes %} {% endcomment %}
     </main>
   </body>
 </html>
