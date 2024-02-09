@@ -1,0 +1,39 @@
+{% extends "quoteapp/base.html" %} {% block content %}
+
+<style>
+  .record {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+  }
+  .quote {
+    font-style: italic;
+    line-height: 1.6;
+  }
+  .author {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 10px;
+  }
+  .tags {
+    font-size: 20px;
+  }
+</style>
+<h1>Viewing tag: {{ tag.name }}</h1>
+{% for quote in quotes %}
+<div class="record">
+  <span class="quote">{{ quote.text }}</span><br />
+  <span class="author">{{ quote.author.fullname }}</span>
+  <div class="tags">
+    Tags: {% for tag in quote.tags.all %}
+    <span class="tag"
+      ><a href="{% url 'quoteapp:quotes_by_tag' tag.id %}"
+        ><small>{{ tag.name }}</small></a
+      ></span
+    >
+    {% if not forloop.last %}| {% endif %} {% endfor %}
+  </div>
+</div>
+{% endfor %} {% endblock %}

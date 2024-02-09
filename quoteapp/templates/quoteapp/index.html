@@ -7,6 +7,27 @@
       rel="stylesheet"
       href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css"
     />
+    <style>
+      .record {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        padding: 20px;
+      }
+      .quote {
+        font-style: italic;
+        line-height: 1.6;
+      }
+      .author {
+        font-size: 18px;
+        font-weight: 700;
+        margin-top: 10px;
+      }
+      .tags {
+        font-size: 20px;
+      }
+    </style>
   </head>
   <body>
     <main class="container">
@@ -17,7 +38,7 @@
           padding-left: 30px;
         "
       >
-        {% comment %} {% if user.is_authenticated %} {% endcomment %}
+        {% if user.is_authenticated %}
         <ul>
           <li>
             <a href="{% url 'quoteapp:quote' %}" role="button">Add quote</a>
@@ -27,10 +48,11 @@
           </li>
           <li><a href="{% url 'quoteapp:tag' %}" role="button">Add tag</a></li>
         </ul>
-        {% comment %}
         <ul>
           <li>Welcome <b>{{ user.username }}!</b></li>
+          {% comment %}
           <li><a href="{% url 'users:profile' %}" role="button">Profile</a></li>
+          {% endcomment %}
           <li><a href="{% url 'users:logout' %}" role="button">Logout</a></li>
         </ul>
         {% else %}
@@ -38,11 +60,32 @@
           <li><a href="{% url 'users:signup' %}" role="button">Sign Up</a></li>
           <li><a href="{% url 'users:login' %}" role="button">Login</a></li>
         </ul>
-        {% endif %} {% endcomment %}
+        {% endif %}
       </nav>
-      <h1>Quotes</h1>
-
-      {% comment %} {% for quote in quotes %} {% endcomment %}
+      <div class="container">
+        <h1>Quotes</h1>
+        {% for quote in quotes %}
+        <div class="record">
+          <span class="quote">{{ quote.text }}</span><br />
+          <span class="author"
+            >{{ quote.author.fullname }}<a
+              href="{% url 'quoteapp:author_detail' quote.author.id %}"
+            >
+              (about)</a
+            ></span
+          >
+          <div class="tags">
+            Tags: {% for tag in quote.tags.all %}
+            <span class="tag"
+              ><a href="{% url 'quoteapp:quotes_by_tag' tag.id %}"
+                ><small>{{ tag.name }}</small></a
+              ></span
+            >
+            {% if not forloop.last %}| {% endif %} {% endfor %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
     </main>
   </body>
 </html>
