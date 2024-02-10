@@ -3,3 +3,6 @@ Django==5.0.1
 psycopg2-binary==2.9.9
 sqlparse==0.4.4
 tzdata==2023.4
+
+Scrapy~=2.11.0
+itemadapter~=0.8.0

@@ -47,6 +47,11 @@
             <a href="{% url 'quoteapp:author' %}" role="button">Add author</a>
           </li>
           <li><a href="{% url 'quoteapp:tag' %}" role="button">Add tag</a></li>
+          <li>
+            <a href="{% url 'quoteapp:scrapping' %}" role="button"
+              >Scrape quotes</a
+            >
+          </li>
         </ul>
         <ul>
           <li>Welcome <b>{{ user.username }}!</b></li>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scraping Process</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Function to check the status of the scraping process
+        function checkStatus() {
+          $.ajax({
+            url: "{% url 'quoteapp:scraping_status' %}",
+            type: "GET",
+            success: function (response) {
+              if (response.status === "complete") {
+                // If scraping is complete, redirect to the main page
+                window.location.href = "{% url 'quoteapp:main' %}";
+              } else {
+                // If scraping is not complete, check again after a delay
+                setTimeout(checkStatus, 1000); // Check again after 1 second
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error("Error checking scraping status:", error);
+            },
+          });
+        }
+
+        // Initial check when the page is loaded
+        checkStatus();
+      });
+    </script>
+  </head>
+  <body>
+    <h1>{{ message }}</h1>
+    <!-- You can add additional content or messages here -->
+  </body>
+</html>

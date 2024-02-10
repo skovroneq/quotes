@@ -1,7 +1,11 @@
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse
 from .forms import TagForm, QuoteForm, AuthorForm
 from .models import Tag, Quote, Author
+from scraper.run_scraper import run_scraper
+import subprocess
 
 # Create your views here.
 
@@ -77,3 +81,14 @@ def quotes_by_tag(request, tag_id):
 def author_detail(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
     return render(request, 'quoteapp/author_detail.html', {"author": author})
+
+
+def scrapping(request):
+    subprocess.Popen(["python", "../quotes/scraper/run_scraper.py"])
+    return render(request, 'quoteapp/scrapping.html', {'message': 'The data is being scrapped'})
+
+
+def scraping_status(request):
+    scraping_status = "in_progress"
+
+    return JsonResponse({'status': scraping_status})
