@@ -1,11 +1,16 @@
-# Define here the models for your scraped items
-#
-# See documentation in:
-# https://docs.scrapy.org/en/latest/topics/items.html
+from quoteapp.models import Tag, Author, Quote
+from scrapy_djangoitem import DjangoItem
 import scrapy
 
 
-class ScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class TagItem(DjangoItem):
+    django_model = Tag
+
+
+class AuthorItem(DjangoItem):
+    django_model = Author
+
+
+class QuoteItem(DjangoItem):
+    django_model = Quote
+    tags = scrapy.Field()

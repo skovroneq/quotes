@@ -11,6 +11,7 @@ urlpatterns = [
     path('quotes_by_tag/<int:tag_id>/',
          views.quotes_by_tag, name='quotes_by_tag'),
     path('author/<int:author_id>', views.author_detail, name='author_detail'),
-    path('scrapping/', views.scrapping, name='scrapping'),
+    # path('scrapping/', views.scrapping, name='scrapping'),
     path('scraping-status/', views.scraping_status, name='scraping_status'),
+    path('scrape/', views.ScrapeView.as_view(), name='scrape'),
 ]

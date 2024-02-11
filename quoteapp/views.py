@@ -1,11 +1,16 @@
+from .tasks import run_spider
+from django.views import View
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from .forms import TagForm, QuoteForm, AuthorForm
 from .models import Tag, Quote, Author
-from scraper.run_scraper import run_scraper
-import subprocess
+from scrapy.crawler import CrawlerProcess
+from scraper.spiders.authors_spider import AuthorsSpider
+from scraper.spiders.quotes_spider import QuotesSpider
+
 
 # Create your views here.
 
@@ -84,7 +89,10 @@ def author_detail(request, author_id):
 
 
 def scrapping(request):
-    subprocess.Popen(["python", "../quotes/scraper/run_scraper.py"])
+    process = CrawlerProcess()
+    process.crawl(QuotesSpider)
+    process.crawl(AuthorsSpider)
+    process.start()
     return render(request, 'quoteapp/scrapping.html', {'message': 'The data is being scrapped'})
 
 
@@ -92,3 +100,12 @@ def scraping_status(request):
     scraping_status = "in_progress"
 
     return JsonResponse({'status': scraping_status})
+
+
+class ScrapeView(View):
+    def get(self, request):
+        # Call the Celery task to start the scraping process
+        run_spider.delay()
+
+        # Return a response indicating that the scraping has started
+        return HttpResponse('Scraping started!')
