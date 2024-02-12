@@ -1,4 +1,3 @@
-from .tasks import run_spider
 from django.views import View
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -88,7 +87,7 @@ def author_detail(request, author_id):
     return render(request, 'quoteapp/author_detail.html', {"author": author})
 
 
-def scrapping(request):
+def scrape(request):
     process = CrawlerProcess()
     process.crawl(QuotesSpider)
     process.crawl(AuthorsSpider)
@@ -101,11 +100,3 @@ def scraping_status(request):
 
     return JsonResponse({'status': scraping_status})
 
-
-class ScrapeView(View):
-    def get(self, request):
-        # Call the Celery task to start the scraping process
-        run_spider.delay()
-
-        # Return a response indicating that the scraping has started
-        return HttpResponse('Scraping started!')
