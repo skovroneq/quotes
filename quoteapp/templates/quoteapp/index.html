@@ -49,32 +49,12 @@
           <li><a href="{% url 'quoteapp:tag' %}" role="button">Add tag</a></li>
           <li>
             <a href="{% url 'quoteapp:scrape' %}" role="button"
-              >Scrape Quotes</a
+              >Scrape quotes</a
             >
-            <script>
-              document
-                .getElementById("runScrapyBtn")
-                .addEventListener("click", function () {
-                  var xhr = new XMLHttpRequest();
-                  xhr.open("POST", "/scrape/");
-                  xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-                  xhr.onload = function () {
-                    if (xhr.status === 200) {
-                      alert("Scrapy has been successfully triggered.");
-                    } else {
-                      alert("Error triggering Scrapy.");
-                    }
-                  };
-                  xhr.send();
-                });
-            </script>
           </li>
         </ul>
         <ul>
           <li>Welcome <b>{{ user.username }}!</b></li>
-          {% comment %}
-          <li><a href="{% url 'users:profile' %}" role="button">Profile</a></li>
-          {% endcomment %}
           <li><a href="{% url 'users:logout' %}" role="button">Logout</a></li>
         </ul>
         {% else %}

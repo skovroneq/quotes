@@ -88,9 +88,5 @@ def author_detail(request, author_id):
 
 
 def scrape(request):
-    if request.method == 'POST':
-        call_command('run_scrapy')
-        return JsonResponse({'status': 'success'})
-    return JsonResponse({'status': 'error'}, status=400)
-
-
+    call_command('run_scrapy')
+    return JsonResponse({'status': 'success'})
