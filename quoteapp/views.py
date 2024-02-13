@@ -1,14 +1,14 @@
-from django.views import View
-from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from .forms import TagForm, QuoteForm, AuthorForm
 from .models import Tag, Quote, Author
-from scrapy.crawler import CrawlerProcess
+from scrapy.crawler import CrawlerProcess, CrawlerRunner
+from scrapy.utils.project import get_project_settings
 from scraper.spiders.authors_spider import AuthorsSpider
 from scraper.spiders.quotes_spider import QuotesSpider
+from django.core.management import call_command
 
 
 # Create your views here.
@@ -88,15 +88,9 @@ def author_detail(request, author_id):
 
 
 def scrape(request):
-    process = CrawlerProcess()
-    process.crawl(QuotesSpider)
-    process.crawl(AuthorsSpider)
-    process.start()
-    return render(request, 'quoteapp/scrapping.html', {'message': 'The data is being scrapped'})
+    if request.method == 'POST':
+        call_command('run_scrapy')
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'}, status=400)
 
-
-def scraping_status(request):
-    scraping_status = "in_progress"
-
-    return JsonResponse({'status': scraping_status})
 

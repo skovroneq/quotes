@@ -12,5 +12,4 @@ urlpatterns = [
          views.quotes_by_tag, name='quotes_by_tag'),
     path('author/<int:author_id>', views.author_detail, name='author_detail'),
     path('scrape/', views.scrape, name='scrape'),
-    path('scraping-status/', views.scraping_status, name='scraping_status'),
 ]
