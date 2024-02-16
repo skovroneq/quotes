@@ -1,12 +1,6 @@
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-
-
-# useful for handling different item types with a single interface
+from datetime import datetime
 from quoteapp.models import Quote, Author, Tag
-from scraper.items import QuoteItem, AuthorItem
+from scamp.items import QuoteItem, AuthorItem
 
 
 class ScraperPipeline:
@@ -22,6 +16,8 @@ class ScraperPipeline:
             quote.tags.set(tags)
             quote.save()
         elif isinstance(item, AuthorItem):
-            Author.objects.get_or_create(fullname=item['fullname'], born_date=item["born_date"],
+            date_of_birth = datetime.strptime(
+                item["born_date"], '%B %d, %Y').date()
+            Author.objects.get_or_create(fullname=item['fullname'], born_date=date_of_birth,
                                          born_location=item["born_location"], description=item["description"])
         return item

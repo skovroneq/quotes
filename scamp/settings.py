@@ -1,4 +1,4 @@
-# Scrapy settings for scraper project
+# Scrapy settings for scamp project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -7,10 +7,10 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "scraper"
+BOT_NAME = "scamp"
 
-SPIDER_MODULES = ["scraper.spiders"]
-NEWSPIDER_MODULE = "scraper.spiders"
+SPIDER_MODULES = ["scamp.spiders"]
+NEWSPIDER_MODULE = "scamp.spiders"
 
 DUPEFILTER_CLASS = 'scrapy.dupefilters.RFPDupeFilter'
 
@@ -63,7 +63,7 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {"scraper.pipelines.ScraperPipeline": 300}
+ITEM_PIPELINES = {"scamp.pipelines.ScraperPipeline": 300}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -88,5 +88,5 @@ ITEM_PIPELINES = {"scraper.pipelines.ScraperPipeline": 300}
 
 # Set settings whose default value is deprecated to a future-proof value
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
-TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+

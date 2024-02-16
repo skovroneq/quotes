@@ -6,9 +6,10 @@ from .forms import TagForm, QuoteForm, AuthorForm
 from .models import Tag, Quote, Author
 from scrapy.crawler import CrawlerProcess, CrawlerRunner
 from scrapy.utils.project import get_project_settings
-from scraper.spiders.authors_spider import AuthorsSpider
-from scraper.spiders.quotes_spider import QuotesSpider
+from scamp.spiders.authors_spider import AuthorsSpider
+from scamp.spiders.quotes_spider import QuotesSpider
 from django.core.management import call_command
+import time
 
 
 # Create your views here.
@@ -88,5 +89,7 @@ def author_detail(request, author_id):
 
 
 def scrape(request):
-    call_command('run_scrapy')
-    return JsonResponse({'status': 'success'})
+    call_command('run_scrape')
+    time.sleep(5)
+    return redirect(to='quoteapp:main')
+

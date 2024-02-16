@@ -1,5 +1,5 @@
 from urllib.parse import urljoin
-from scraper.items import AuthorItem
+from scamp.items import AuthorItem
 import scrapy
 
 

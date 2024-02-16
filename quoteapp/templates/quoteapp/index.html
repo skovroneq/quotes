@@ -70,11 +70,10 @@
         <div class="record">
           <span class="quote">{{ quote.text }}</span><br />
           <span class="author"
-            >{{ quote.author.fullname }}<a
+            >{{ quote.author.fullname }} (<a
               href="{% url 'quoteapp:author_detail' quote.author.id %}"
-            >
-              (about)</a
-            ></span
+            >about</a
+            >)</span
           >
           <div class="tags">
             Tags: {% for tag in quote.tags.all %}

@@ -1,8 +1,9 @@
 from django.core.management.base import BaseCommand
-from scraper.spiders.quotes_spider import QuotesSpider
-from scraper.spiders.authors_spider import AuthorsSpider
+from scamp.spiders.quotes_spider import QuotesSpider
+from scamp.spiders.authors_spider import AuthorsSpider
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
+from twisted.internet import reactor
 
 
 class Command(BaseCommand):
@@ -10,6 +11,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         process = CrawlerProcess(get_project_settings())
-        process.crawl(QuotesSpider)
         process.crawl(AuthorsSpider)
+        process.crawl(QuotesSpider)
         process.start()
+
+
